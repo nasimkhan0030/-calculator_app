@@ -82,6 +82,7 @@ fun CalculatorButton(btn :String) {
         contentColor = Color.White
     ) {
         Text(text = btn)
+
         
     }
     
