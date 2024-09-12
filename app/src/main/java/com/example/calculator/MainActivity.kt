@@ -3,6 +3,7 @@ package com.example.calculator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -12,20 +13,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.ui.theme.Calculator
 import com.example.calculator.ui.theme.CalculatorTheme
+import com.example.calculator.ui.theme.CalculatorViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val calculatorViewModel =ViewModelProvider(this)[CalculatorViewModel::class.java]
+        enableEdgeToEdge()
         setContent {
             CalculatorTheme {
                 // A surface container using the 'background' color from the theme
                 Scaffold(
                     modifier = Modifier.fillMaxSize()){innerPadding ->
-                    Calculator(modifier = Modifier.padding(innerPadding))
-
-
+                    Calculator(modifier = Modifier.padding(innerPadding),calculatorViewModel)
                 }
             }
         }

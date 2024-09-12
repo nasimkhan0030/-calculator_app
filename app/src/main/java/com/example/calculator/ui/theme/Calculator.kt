@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ val buttonList = listOf(
 )
 
 @Composable
-fun Calculator( modifier: Modifier= Modifier) {
+fun Calculator( modifier: Modifier= Modifier,viewModel: CalculatorViewModel) {
 Box(modifier = Modifier){
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -48,8 +49,8 @@ Box(modifier = Modifier){
             ),
             maxLines = 5,
             overflow = TextOverflow.Ellipsis
-
         )
+        Spacer(modifier = Modifier.weight(1f))
         Text(
             text = "246",
             style = TextStyle(
@@ -64,7 +65,9 @@ Box(modifier = Modifier){
             columns = GridCells.Fixed(4),
             ){
             items(buttonList) {
-                CalculatorButton(btn = it)
+                CalculatorButton(btn = it, onClick = {
+                    viewModel.onButttonClick(it)
+                })
             }
         }
     }
@@ -72,18 +75,16 @@ Box(modifier = Modifier){
 }
 
 @Composable
-fun CalculatorButton(btn :String) {
-    Box(modifier = Modifier.padding(8.dp))
+fun CalculatorButton(btn :String,onClick :()->Unit) {
+    Box(modifier = Modifier.padding(10.dp))
     FloatingActionButton(
-        onClick = {  },
+        onClick = onClick,
         modifier = Modifier.size(80.dp),
         shape = CircleShape,
         containerColor = getColor(btn),
         contentColor = Color.White
     ) {
-        Text(text = btn)
-
-        
+        Text(text = btn, fontSize = 20.sp, fontWeight = FontWeight.Bold)
     }
     
 }
